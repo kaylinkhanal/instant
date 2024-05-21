@@ -1,32 +1,29 @@
-
-
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    isLoggedIn: false,
-    token: '',
-    todaysRideCount: 3232
+    width: 40,
+    height: 40,
+    backgroundColor: 'red'
 }
 
 
-const userSlice = createSlice({
-    name: 'user',
+const boxSlice = createSlice({
+    name: 'box',
     initialState: initialState,
     reducers:{
-        setLoggedIn(state, payload){
-            state.isLoggedIn = true
-            return state
+        increaseHeight(state, actions){
+            state.height= state.height+1
         },
-        addToken(state, payload){
-            state.token = '34r3gbgfdsadfvhdsjsnk'
-            return state
+        increaseWidth(state, actions){
+            state.width= state.width+1
         },
-        updateRideCount(state, payload){
-            state.todaysRideCount= state.todaysRideCount + 1
-            return state
-        }
+       changeColor(state, actions){
+        debugger;
+          state.backgroundColor= actions.payload
+        },
+
     }
 })
 
-export const { setLoggedIn, addToken, updateRideCount } = userSlice.actions
-export default userSlice.reducer
+export const { increaseHeight, increaseWidth,changeColor } = boxSlice.actions
+export default boxSlice.reducer

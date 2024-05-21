@@ -13,15 +13,15 @@ const userSlice = createSlice({
     name: 'user',
     initialState: initialState,
     reducers:{
-        setLoggedIn(state, payload){
+        setLoggedIn(state, actions){
             state.isLoggedIn = true
             return state
         },
-        addToken(state, payload){
+        addToken(state, actions){
             state.token = '34r3gbgfdsadfvhdsjsnk'
             return state
         },
-        updateRideCount(state, payload){
+        updateRideCount(state, actions){
             state.todaysRideCount= state.todaysRideCount + 1
             return state
         }
