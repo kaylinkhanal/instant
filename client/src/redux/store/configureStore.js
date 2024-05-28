@@ -10,7 +10,7 @@ const store = configureStore({
         product: productSlice,
         box: boxSlice
     },
-    middleware: () => new Tuple(logger)
+    middleware: () => new Tuple( logger)
 })
 
 export default store

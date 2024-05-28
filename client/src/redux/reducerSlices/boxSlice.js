@@ -5,8 +5,9 @@ const initialState = {
     height: 40,
     backgroundColor: 'red',
     borderRadius: '0%',
-    bottom: 0,
-    left: 0
+    bottom:0,
+    left:0,
+
 
 }
 
@@ -16,12 +17,14 @@ const boxSlice = createSlice({
     initialState: initialState,
     reducers:{
         switchArrow(state, actions){
-            debugger;
             const  {value, type} = actions.payload
+                  //reset bottom and left once
             if(type == 'up' || type == 'down'){
                 state.bottom = value
+                state.left= 0
             }else {
                 state.left = value
+                state.bottom= 0
             }
      
         },
@@ -47,7 +50,9 @@ const boxSlice = createSlice({
         },
         changeShape(state, actions){
                 if(state.borderRadius == '0%'){
+
                     state.borderRadius= '50%'
+                    state.width = state.height
                 }else{
                     state.borderRadius = '0%'
                 }
