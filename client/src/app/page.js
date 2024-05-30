@@ -11,7 +11,7 @@ const login = () => {
           <h2 className="text-center text-3xl font-extrabold">
             Log in to your account
           </h2>
-              <Input variant="underlined" type="email" className="w-full m-4" label="Email address" />
+              <Input variant="underlined" type="text" className="w-full m-4" label="Phone Number or Email Address" />
               <Input type="password" variant="underlined" className="w-full m-4" label="Password" />
               <Button type="button" className="w-full text-white bg-blue-500 m-4"> Log in </Button>
               <p className="text-sm m-2 text-center">Are You New? <a as={Link} href="/register" className="text-blue-600 font-semibold hover:underline">Create an account</a></p>
