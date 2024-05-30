@@ -1,43 +1,23 @@
 'use client'
-import Image from "next/image";
-import {Button, Input} from "@nextui-org/react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateRideCount } from "@/redux/reducerSlices/userSlice";
-import { increaseHeight, increaseWidth,changeColor,changeShape,reset, switchArrow } from "@/redux/reducerSlices/boxSlice";
+import { Button, Input, Image } from '@nextui-org/react'
+import Link from 'next/link'
+import React from 'react'
 
-export default function Home() {
-  //
-  const {width, height,left, backgroundColor,bottom, borderRadius} = useSelector(state=> state.box)
-  const dispatch = useDispatch()
-  let area
-  if(borderRadius === '0%'){
-    area = width * height
-  }else{
-    area = Math.PI * (width/2) **2
-  }
- 
+const login = () => {
   return (
-    <main className="bg-black flex min-h-screen flex-col items-center justify-between p-4">
-     <span className="bg-white text-2xl">{area}</span> 
-      <div  onClick={()=> dispatch(changeShape())}
-       style={{width,height,backgroundColor,borderRadius, bottom:bottom, left:left, position:'relative'}}>
-
+<div className="bg-gray-50 h-screen flex flex-col items-center justify-center">
+        <div className=" border p-8 rounded border-gray-300 bg-white">
+          <Image src="instantlogo.png" alt="logo" className='w-20 mx-36' />
+          <h2 className="text-center text-3xl font-extrabold">
+            Log in to your account
+          </h2>
+              <Input variant="underlined" type="email" className="w-full m-4" label="Email address" />
+              <Input type="password" variant="underlined" className="w-full m-4" label="Password" />
+              <Button type="button" className="w-full text-white bg-blue-500 m-4"> Log in </Button>
+              <p className="text-sm m-2 text-center">Are You New? <a as={Link} href="/register" className="text-blue-600 font-semibold hover:underline">Create an account</a></p>
+        </div>
       </div>
-
-      <Button onClick={()=> dispatch(reset())}>Reset</Button>
-      <div className="flex">
-    <Button onClick={()=>  dispatch(switchArrow({value:-60, type:'left'}))}> ← </Button>
-    <Button onClick={()=>  dispatch(switchArrow({value:60, type:'up'}))}> ↑ </Button>
-    <Button onClick={()=>  dispatch(switchArrow({value:-60, type:'down'}))}> ↓ </Button>
-    <Button onClick={()=>  dispatch(switchArrow({value:60, type:'right'}))}> → </Button>
-    </div>
-    <Input onChange={(e)=> dispatch(changeColor(e.target.value)) } placeholder="Enter color"/>
-    <Button onClick={()=> dispatch(increaseHeight())}>Increase height</Button>
-    <Button onClick={()=> dispatch(increaseWidth())}>Increase width</Button>
-
- 
-
-    
-    </main>
-  );
+  )
 }
+
+export default login
