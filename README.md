@@ -1,12 +1,24 @@
-# instant
+### Instant
 
+
+INSTALLATION
+
+# frontend
+
+ ```
+    cd client
+    npm i
+    npm run dev
+   
+   ```
 
 FEATURES:
 
 PHASE 1-> to send a passenger from pickup to destination
 
- - Multi user login
- - Rider and User and Admin  Panel/Dashboard
+- [x] Authentication page
+- [ ] Multi user login
+- Rider and User and Admin  Panel/Dashboard
     1.1 USER->  NEW RIDE SECTION, PRICE GENERATE(distance, time, vehicleType), PRICE BARGAIN,  
     1.2 RIDER-> Different Sign Up, Request 
     1.3 ADMIN-> Admin approves rider(SENDS EMAIL TO THE RIDER), pricePerKMBike, 
