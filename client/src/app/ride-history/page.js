@@ -1,64 +1,31 @@
 'use client'
-import { Button, Input } from '@nextui-org/react'
-import React, {useState} from 'react'
-import { useSelector } from 'react-redux'
-
-
-const Card = (props) => {
-    return (
-      <div  className='p-4 m-12 shadow-lg w-[20%]'>
-        {props.msg}
-      </div>
-    )
-  }
-
-  const Body =()=>{
-    return (
-        <Card msg="happy dashain"/>
-    )
-  }
-
-  const Footer =()=>{
-    return (
-        <Card msg="happy teej"/>
-    )
-  }
+import CustomCard from '@/component/card/page'
+import { Button } from '@nextui-org/react'
+import React, {useState, useEffect} from 'react'
 
 const RideHistory = () => {
+  const [rideList, setRideList] = useState([])
+  const fetchListOfRides =async()=>{
+   const res=  await fetch('http://localhost:8000/rides')
+   const data = await res.json()
+   setRideList(data)
+  }
+
+  useEffect(()=>{
+    fetchListOfRides()
+  }, [] )
     return (
       <div>
-        <Body/>
-        <Footer/>
-
-      </div>
-    )
-  }
+        <div className='flex p-4'>
+        {rideList.map((item,id)=>{
+          return  <CustomCard item={item}/>
+        })}
   
-  const RideHistory2 = () => {
-  
-    return (
-      <div>
-        <Footer/>
-      </div>
-    )
-  }
-  
-
-
-  const Main =()=>{
-    const z = useSelector(state=>state.product.wishListItems)
-    return (
-        <div>
-          {JSON.stringify(z)}
-            <RideHistory/>
-            <RideHistory2/>
+    
         </div>
+
+      </div>
     )
   }
-
-  //parent child component
-  // -> parent is a bigger peice
-  // -> parent is super set of child
-
-export default Main
-
+  
+export default RideHistory
