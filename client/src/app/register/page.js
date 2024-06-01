@@ -12,7 +12,7 @@ const register = () => {
       .min(2, '*Too Short!')
       .max(50, '*Too Long!')
       .required('*Required'),
-      password: Yup.string().min(2, '*Too Short!')
+      password: Yup.string().min(8, '*Password must be 8 characters or more!')
       .max(50, 'Too Long!').required('*Required'),
       phoneNumber: Yup.string().max(20, '*Too Long!').min(2, '*Too Short!')
       .required('*Required')

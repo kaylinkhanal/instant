@@ -11,7 +11,7 @@ const login = () => {
     username: Yup.string()
     .min(3,'Invalid Username')
     .max(50,'Invalid Username')
-    .required("*Cannot be empty"),
+    .required("*Cannot be empty") ,
 
     password: Yup.string()
     .min(3,'Invalid password')
