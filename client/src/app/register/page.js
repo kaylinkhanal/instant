@@ -80,7 +80,8 @@ const register = () => {
               onChange={formik.handleChange}
               value={formik.values.password}
             type="password" label = "Password" variant="underlined" className="w-full m-4" placeholder="Enter your password" />
-            
+            <div className='text-red-500 text-small'>{formik.errors?.password}</div>
+
             <Input
                  id="confirmPassword"
                  name="confirmPassword"
