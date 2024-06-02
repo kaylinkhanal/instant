@@ -8,10 +8,11 @@ import * as Yup from 'yup';
 const login = () => {
 
   const SignupSchema = Yup.object().shape({
-    username: Yup.string()
-    .min(3,'Invalid Username')
-    .max(50,'Invalid Username')
-    .required("*Cannot be empty") ,
+    phoneNumber: Yup.string()
+    .min(3,'Invalid phoneNumber')
+    .max(50,'Invalid phoneNumber')
+    .required("*Cannot be empty")
+    ,
 
     password: Yup.string()
     .min(3,'Invalid password')
@@ -21,7 +22,7 @@ const login = () => {
 
   const formik = useFormik({
     initialValues: {
-      username:'',
+      phoneNumber:'',
       password:'',
     
     },
@@ -40,13 +41,13 @@ const login = () => {
             Log in to your account
           </h2>
               <Input variant="underlined" 
-              id="username" 
+              id="phoneNumber" 
               onChange={formik.handleChange}
-              value={formik.values.username}
+              value={formik.values.phoneNumber}
               type="text" 
               className="w-full m-4"
-              label="Phone Number or Email Address" />
-              <div className='text-red-500 text-small m-1'>{formik.errors?.username}</div>
+              label="Phone Number" />
+              <div className='text-red-500 text-small m-1'>{formik.errors?.phoneNumber}</div>
 
               <Input type="password" 
               id="password" 
