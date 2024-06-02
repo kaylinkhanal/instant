@@ -3,6 +3,7 @@ import "./globals.css";
 import ReduxProvider from "@/redux/reduxProvider";
 
 const inter = Inter({ subsets: ["latin"] });
+import { Toaster } from 'react-hot-toast';
 
 export const metadata = {
   title: "Create Next App",
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <ReduxProvider>
         {children}
+        <Toaster />
         </ReduxProvider>
         </body>
     </html>

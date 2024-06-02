@@ -1,6 +1,8 @@
 'use client'
 import { Button, Image, Input, RadioGroup, Radio } from '@nextui-org/react'
 import Link from 'next/link'
+import toast, { Toaster } from 'react-hot-toast';
+
 import { useFormik } from 'formik';
 import React from 'react'
 import * as Yup from 'yup';
@@ -26,11 +28,24 @@ const register = () => {
     },
     validationSchema:SignupSchema,
     onSubmit: values => {
-      debugger;
+      registerUser(values)
     },
   });
 
- 
+ const registerUser =async (values) => {
+  try{
+    const res=  await fetch('http://localhost:8000/register',{
+      method: 'POST',
+      body: JSON.stringify(values),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const data = await res.json()
+    toast(data.msg)
+  }catch(err){
+    toast(err);
+  }
+
+ }
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -84,8 +99,8 @@ const register = () => {
               onChange={formik.handleChange}
               value={formik.values.role}
             >
-              <Radio value="Rider">Rider</Radio>
-              <Radio value="Passenger">Passenger</Radio>
+              <Radio value="rider">Rider</Radio>
+              <Radio value="passenger">Passenger</Radio>
             </RadioGroup>
             <Button  type="submit" className="w-full bg-blue-500 text-white"> Create an account </Button>
             <p className="text-sm m-2 text-center">Already have an account? <a as={Link} href="/" className="text-blue-600 font-semibold hover:underline">Login here</a></p>
