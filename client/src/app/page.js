@@ -46,7 +46,7 @@ const login = () => {
     const data = await res.json()
     toast(data.msg)
   }catch(err){
-    toast(err);
+    toast(err.msg);
   }
 
  }
