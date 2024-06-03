@@ -4,6 +4,8 @@ import Link from 'next/link'
 import React from 'react'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import toast from 'react-hot-toast';
+
 
 const login = () => {
 
@@ -29,9 +31,25 @@ const login = () => {
 
     validationSchema:SignupSchema,
     onSubmit: values => {
-      debugger;
+      loginUser(values)
     },
   });
+
+
+ const loginUser =async (values) => {
+  try{
+    const res=  await fetch('http://localhost:8000/login',{
+      method: 'POST',
+      body: JSON.stringify(values),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const data = await res.json()
+    toast(data.msg)
+  }catch(err){
+    toast(err);
+  }
+
+ }
   return (
     <form onSubmit={formik.handleSubmit}>
 <div className="bg-gray-50 h-screen flex flex-col items-center justify-center">

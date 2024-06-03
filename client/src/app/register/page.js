@@ -16,8 +16,9 @@ const register = () => {
       .required('*Required'),
       password: Yup.string().min(8, '*Password must be 8 characters or more!')
       .max(50, 'Too Long!').required('*Required'),
-      phoneNumber: Yup.string().max(20, '*Too Long!').min(2, '*Too Short!')
+      phoneNumber: Yup.string().max(11, '*Too Long!').min(9, '*Invalid Number!')
       .required('*Required')
+    
       .matches(/^[0-9]+$/, '*Must be a number'),
       confirmPassword: Yup.string()
       .oneOf([Yup.ref('password')], '*Passwords do not match'),
@@ -79,7 +80,8 @@ const register = () => {
              variant="underlined" 
              className="w-full m-4"
               placeholder="Enter Name" />
-              <div className='text-red-500 text-small'>{formik.errors?.fullName}</div>
+              <div className='text-red-500 text-small'>
+              {formik.touched.fullName && formik.errors?.fullName}</div>
 
             <Input
              id="email"
@@ -87,7 +89,8 @@ const register = () => {
              onChange={formik.handleChange}
              value={formik.values.email}
             type="email" label = "Email" variant="underlined" className="w-full m-4" placeholder="Enter email" />
-            <div className='text-red-500 text-small'>{formik.errors?.email}</div>
+            <div className='text-red-500 text-small'>
+              {formik.touched.email && formik.errors?.email}</div>
             
             <Input
               id="password"
@@ -95,7 +98,8 @@ const register = () => {
               onChange={formik.handleChange}
               value={formik.values.password}
             type="password" label = "Password" variant="underlined" className="w-full m-4" placeholder="Enter your password" />
-            <div className='text-red-500 text-small'>{formik.errors?.password}</div>
+            <div className='text-red-500 text-small'>
+              { formik.touched.password && formik.errors?.password}</div>
 
             <Input
                  id="confirmPassword"
@@ -103,7 +107,9 @@ const register = () => {
                  onChange={formik.handleChange}
                  value={formik.values.confirmPassword}
             type="password" label = "Confirm Password" variant="underlined" className="w-full m-4" placeholder="Enter your password again" />
-           <div className='text-red-500 text-small'>{formik.errors?.confirmPassword}</div>
+           <div className='text-red-500 text-small'>{
+           
+           formik.touched.confirmPassword && formik.errors?.confirmPassword}</div>
             <RadioGroup
               label="Select Role"
               orientation="horizontal"
@@ -116,7 +122,8 @@ const register = () => {
               <Radio value="rider">Rider</Radio>
               <Radio value="passenger">Passenger</Radio>
             </RadioGroup>
-            <div className='text-red-500 text-small m-1'>{formik.errors?.role}</div>
+            <div className='text-red-500 text-small m-1'>
+              {formik.touched.role && formik.errors?.role}</div>
             
             <Button  type="submit" className="w-full bg-blue-500 text-white"> Create an account </Button>
             <p className="text-sm m-2 text-center">Already have an account? <a as={Link} href="/" className="text-blue-600 font-semibold hover:underline">Login here</a></p>
