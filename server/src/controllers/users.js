@@ -34,7 +34,7 @@ const registerUser =  async (req, res)=> {
           if(isMatched){
             //generate a token here
             const token = jwt.sign({ phoneNumber: req.body.phoneNumber }, process.env.SECRET_KEY);
-            res.json({token, msg: "Authorized" })
+            res.json({token, msg: "Authorized",user })
           }else{
             res.status(401).json({msg:"Incorrect Password!!"})
           }
@@ -45,6 +45,11 @@ const registerUser =  async (req, res)=> {
       console.log(err)
     }
     }
+
+    const findAllUser = async (req, res)=> {
+      const list=  await User.find()
+      res.send(list)
+    }
   
 
 // login:
@@ -53,4 +58,4 @@ const registerUser =  async (req, res)=> {
 // //3. token 
 
 
-module.exports = {registerUser,loginUser}
+module.exports = {registerUser,loginUser,findAllUser}

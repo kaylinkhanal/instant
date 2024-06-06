@@ -5,9 +5,14 @@ import React from 'react'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { addToken, addUserDetails } from '@/redux/reducerSlices/userSlice';
+import { useRouter } from 'next/navigation';
 
 
 const login = () => {
+  const dispatch = useDispatch()
+  const router = useRouter()
 
   const SignupSchema = Yup.object().shape({
     phoneNumber: Yup.string()
@@ -45,6 +50,13 @@ const login = () => {
     })
     const data = await res.json()
     toast(data.msg)
+    dispatch(addToken(data.token))
+    dispatch(addUserDetails(data.user))
+    console.log(res)
+    if(res.statusText == 'OK'){
+      router.push('/home')
+    }
+
   }catch(err){
     toast(err.msg);
   }

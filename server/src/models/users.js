@@ -11,6 +11,7 @@ const usersSchema = new Schema({
     enum : ['passenger','rider','admin'],
     default: 'passenger'
   },
+  avatar: String,
 });
 
 const User = mongoose.model('User', usersSchema);

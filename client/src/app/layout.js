@@ -4,6 +4,7 @@ import ReduxProvider from "@/redux/reduxProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 import { Toaster } from 'react-hot-toast';
+import AuthProvider from "./provider/AuthProvider";
 
 export const metadata = {
   title: "Create Next App",
@@ -17,7 +18,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <ReduxProvider>
-        {children}
+          {/* <AuthProvider> */}
+          {children}
+          {/* </AuthProvider> */}
         <Toaster />
         </ReduxProvider>
         </body>

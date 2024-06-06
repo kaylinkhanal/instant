@@ -7,6 +7,9 @@ const port = process.env.PORT
 const prouductRoute = require('./routes/products')
 const ridesRoute = require('./routes/rides')
 const userRoute = require('./routes/users')
+const messageRoute = require('./routes/message')
+
+
 
 
 const  dbConnect  = require('./db/connection')
@@ -16,6 +19,7 @@ app.use(cors())
 
 app.use(ridesRoute)
 app.use(userRoute)
+app.use(messageRoute)
 app.use(prouductRoute)
 
 app.listen(port, () => {
