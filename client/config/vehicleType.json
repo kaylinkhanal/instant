@@ -1,0 +1,17 @@
+{
+    "Tesla": {
+        "pricePerUnitKm": 2000,
+        "vehicleType": "car",
+        "brandImage": "./tesla.png"
+    },
+    "Audi": {
+        "pricePerUnitKm": 3000,
+        "vehicleType": "car",
+        "brandImage":"./audi.png"
+    },
+    "Mercedes": {
+        "pricePerUnitKm": 6000,
+        "vehicleType": "car",
+        "brandImage":"./mercedes.png"
+    }
+}
