@@ -8,6 +8,7 @@
         "pricePerUnitKm": 3000,
         "vehicleType": "car",
         "brandImage":"./audi.png"
+        
     },
     "Mercedes": {
         "pricePerUnitKm": 6000,
