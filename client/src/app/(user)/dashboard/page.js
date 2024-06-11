@@ -25,11 +25,11 @@ const UserDashboard = () => {
 
   return (
     <div >
-       <DashboardCard totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>
+       <DashboardCard totalPrice={totalPrice} setTotalPrice={setTotalPrice} initialPrice={initialPrice}/>
    
        <div className='bg-white'> 
-       <div style={{zIndex:99}} className=' flex justify-center'>
-        <div className='w=[40%]' style={{marginTop:'30px', zIndex:99}}>
+       <div style={{zIndex:999}} className=' flex justify-center'>
+        <div className='w=[40%]' style={{marginTop:'30px', zIndex:999}}>
           {Object.keys(vehicleType).map((item)=>{
             const isSelectedItem = item === selectedVehicle
             return (

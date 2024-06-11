@@ -1,49 +1,37 @@
-'use client'
+
+import { MapContainer, TileLayer,Marker,Popup, useMap } from 'react-leaflet'
+
+
 import React from 'react'
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 
-const containerStyle = {
-  width: '100vw',
-  height: '100vh'
-};
+import "leaflet/dist/leaflet.css";
 
-const center = {
-  lat: 28.3974,
-  lng: 84.1258
-};
+import {  iconPerson  } from './icon';
+import { useSelector } from 'react-redux';
 
-function Maps() {
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyDLfjmFgDEt9_G2LXVyP61MZtVHE2M3H-0"
-  })
+const Map = () => {
+ const {pickUpCoords}= useSelector(state=>state.location)
 
-  const [map, setMap] = React.useState(null)
+  return (
 
-  const onLoad = React.useCallback(function callback(map) {
-    // This is just an example of getting and using the map instance!!! don't just blindly copy!
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
+ <MapContainer center={[27.70169, 85.3206]} zoom={13} scrollWheelZoom={false}>
+    <TileLayer
+      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    />
+  
+   <Marker  draggable position={pickUpCoords}
+   >
+      </Marker>
+    {/* <Marker draggable position={[27.70169, 85.3206]}>
+      <Popup>
+       Destination
+      </Popup>
+    </Marker> */}
 
-    setMap(map)
-  }, [])
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null)
-  }, [])
-
-  return isLoaded ? (
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={10}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-      >
-        { /* Child components, such as markers, info windows, etc. */ }
-        <></>
-      </GoogleMap>
-  ) : <>not loaded</>
+  </MapContainer>
+   
+  )
 }
 
-export default React.memo(Maps)
+export default Map

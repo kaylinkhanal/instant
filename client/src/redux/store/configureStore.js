@@ -5,6 +5,7 @@ import boxSlice from "../reducerSlices/boxSlice"
 import logger from 'redux-logger'
 import chatSlice from "../reducerSlices/chatSlice"
 import ridesSlice from "../reducerSlices/ridesSlice"
+import locationSlice from "../reducerSlices/locationSlice"
 
 const store = configureStore({
     reducer:{
@@ -12,7 +13,8 @@ const store = configureStore({
         product: productSlice,
         box: boxSlice,
         chat: chatSlice,
-        ride: ridesSlice
+        ride: ridesSlice,
+        location: locationSlice
     },
     middleware: () => new Tuple( logger)
 })
