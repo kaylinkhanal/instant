@@ -1,5 +1,5 @@
 'use client'
-import React, {useState } from 'react'
+import React, {useEffect, useState } from 'react'
 import vehicleType from '../../../../config/vehicleType.json'
 
 import DashboardCard from './dashboardCard'
@@ -10,10 +10,14 @@ import Maps from '@/component/maps/page'
 const UserDashboard = () => {
   const dispatch = useDispatch()
   const {selectedVehicle} = useSelector(state=>state.ride)
-  const pricePerUnitKm = vehicleType[selectedVehicle].pricePerUnitKm
-  const distance = 3.5
-  let initialPrice = pricePerUnitKm * distance
-  const [totalPrice, setTotalPrice] = useState(initialPrice)
+
+  useEffect(()=>{
+    const pricePerUnitKm = vehicleType[selectedVehicle].pricePerUnitKm
+    const distance = 3.5
+    let initialPrice = pricePerUnitKm * distance
+    setTotalPrice(initialPrice)
+  },[selectedVehicle])
+  const [totalPrice, setTotalPrice] = useState('')
     // function isMaxTime(time){
     //   if(time > 18 || time<6){
     //     price = price+100
@@ -25,7 +29,7 @@ const UserDashboard = () => {
 
   return (
     <div >
-       <DashboardCard totalPrice={totalPrice} setTotalPrice={setTotalPrice} initialPrice={initialPrice}/>
+       <DashboardCard totalPrice={totalPrice} setTotalPrice={setTotalPrice} initialPrice={'100'}/>
    
        <div className='bg-white'> 
        <div style={{zIndex:999}} className=' flex justify-center'>

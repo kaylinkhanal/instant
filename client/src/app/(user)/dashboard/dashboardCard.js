@@ -5,8 +5,10 @@ import vehicleType from '../../../../config/vehicleType.json'
 import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
 import { Autocomplete,AutocompleteItem, Button, Input } from '@nextui-org/react'
-import { setPickUpCords } from '@/redux/reducerSlices/locationSlice'
+import { setPickUpAddress, setPickUpCords } from '@/redux/reducerSlices/locationSlice'
 const DashboardCard = (props) => {
+  const [formState, setFormState] = useState('pickUpState')
+  const {pickUpCoords,selectedPickUpAddress}= useSelector(state=>state.location)
   const dispatch = useDispatch()
     const {selectedVehicle} = useSelector(state=>state.ride)
     const [searchResult, setSearchResult] = useState([])
@@ -14,6 +16,7 @@ const DashboardCard = (props) => {
   useEffect(()=>{
     console.log(searchId, searchResult)
     if(searchId && searchResult[searchId]?.geometry?.coordinates){
+      debugger;
       dispatch(setPickUpCords(searchResult[searchId].geometry.coordinates))
     }
   
@@ -25,11 +28,17 @@ const DashboardCard = (props) => {
       }
     }
     const fetchPlacesAutocomplete = async(address) => {
-      if(address){
-        const res=   await fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${address}&apiKey=490f9173e6a6441b98f94295be7b750d&limit=5`)
-        const data = await res.json()
-          setSearchResult(data.features)
+      try{
+        dispatch(setPickUpAddress(address))
+        if(address){
+          const res=   await fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${address}&apiKey=490f9173e6a6441b98f94295be7b750d&limit=5`)
+          const data = await res.json()
+            setSearchResult(data.features)
+        }
+      }catch(err){
+        console.log(err)
       }
+ 
     }
   return (
     <div >
@@ -37,9 +46,11 @@ const DashboardCard = (props) => {
           <div className='text-4xl w-[40%] p-12'>
           <strong>Faster</strong> <br/> more convenient<br/> in a new way
           <Autocomplete 
-        label="Search Places" 
+        label="Enter pick up location" 
         className="max-w-xs" 
-        onSelectionChange	={(key)=>setSearchId(key)}
+        isDisabled={ formState === 'destinationState'}
+        inputValue={selectedPickUpAddress}
+        onSelectionChange	={(key)=>console.log(key)}
         onInputChange={(text)=> fetchPlacesAutocomplete(text)}
       >
         {searchResult.map((item,id) => (
@@ -49,9 +60,11 @@ const DashboardCard = (props) => {
         ))}
       </Autocomplete>
    
+       {formState === 'destinationState' &&    <Input placeholder='Enter Destination Address'/>}
         
-          <Input placeholder='Enter Destination Address'/>
-          <Button className="bg-black rounded-none text-white my-6">Search Rides</Button>
+          <Button
+          onClick={()=> setFormState('destinationState')}
+          className="bg-black rounded-none text-white my-6">Confirm Pick Up</Button>
           </div>
           <div className='p-4'>
             <Image src={"/"+selectedVehicle+'.png' }  className='h-200' height={500} width={500}/>
