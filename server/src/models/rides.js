@@ -5,11 +5,10 @@ const RidesSchema = new Schema({
   riderId: String,
   passengerId: String,
   price: Number,
-  distance: Number,
   pickUp: String,
   destination: String,
   pickUpCoords: Object,
-  destinationUpCoords: Object,
+  destinationCoords: Object,
   distance: Number,
   // status: ['pickedUp', 'cancelled','pending', 'completed'],
   vehicleType: String

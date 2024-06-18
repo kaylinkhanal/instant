@@ -8,8 +8,8 @@ const getListOfProducts = async function (req, res) {
 }
 
 
-const addNewRides =  function (req, res) {
-    Rides.create(req.body)
+const addNewRides =  async (req, res)=> {
+   await Rides.create(req.body)
     res.send("ok")
   }
 

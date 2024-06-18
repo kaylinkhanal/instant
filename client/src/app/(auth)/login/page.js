@@ -52,9 +52,8 @@ const login = () => {
     toast(data.msg)
     dispatch(addToken(data.token))
     dispatch(addUserDetails(data.user))
-    console.log(res)
     if(res.statusText == 'OK'){
-      router.push('/home')
+      router.push('/')
     }
 
   }catch(err){

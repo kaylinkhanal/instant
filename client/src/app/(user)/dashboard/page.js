@@ -7,29 +7,30 @@ import { Button } from '@nextui-org/react'
 import { setSelectedVehicle } from '@/redux/reducerSlices/ridesSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import Maps from '@/component/maps/page'
+import { getDistance } from 'geolib'
+import { useRouter } from 'next/navigation'
 const UserDashboard = () => {
+
+  const {pickUpCoords, destinationCoords , selectedPickUpAddress,selectedDestinationAddress,}= useSelector(state=>state.location)
   const dispatch = useDispatch()
   const {selectedVehicle} = useSelector(state=>state.ride)
+  const distance = getDistance(
+    { latitude: pickUpCoords[0], longitude: pickUpCoords[1] },
+    { latitude: destinationCoords[0] , longitude: destinationCoords[1]  }
+)/1000
 
   useEffect(()=>{
     const pricePerUnitKm = vehicleType[selectedVehicle].pricePerUnitKm
-    const distance = 3.5
     let initialPrice = pricePerUnitKm * distance
     setTotalPrice(initialPrice)
-  },[selectedVehicle])
+  },[selectedVehicle,selectedPickUpAddress,selectedDestinationAddress])
+
   const [totalPrice, setTotalPrice] = useState('')
-    // function isMaxTime(time){
-    //   if(time > 18 || time<6){
-    //     price = price+100
-    //   }
-    // }
-    // isMaxTime(10)
-    // price
 
 
   return (
     <div >
-       <DashboardCard totalPrice={totalPrice} setTotalPrice={setTotalPrice} initialPrice={'100'}/>
+       <DashboardCard distance={distance} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>
    
        <div className='bg-white'> 
        <div style={{zIndex:999}} className=' flex justify-center'>
