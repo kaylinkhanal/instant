@@ -166,7 +166,7 @@ const DashboardCard = (props) => {
               </>)}
           { pickUpCoords[0] && destinationCoords[0] && selectedPickUpAddress && selectedDestinationAddress && (
           <>
-            Estimated Price:  <Button  disabled={riderSearchStart} onClick={()=>updatePrice('dec')} className=' bg-white text-black m-2 text-2xl'>-</Button >  {props.totalPrice}  
+            Estimated Price:  <Button  disabled={riderSearchStart} onClick={()=>updatePrice('dec')} className=' bg-white text-black m-2 text-2xl'>-</Button >  {Math.trunc(props.totalPrice)}  
              <Button disabled={riderSearchStart}  onClick={()=>updatePrice('inc')} className='bg-white text-black m-2 text-2xl'>+</Button> 
             <p>   Estimated Distance: {props.distance} km </p>
           </>

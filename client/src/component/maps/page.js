@@ -1,7 +1,6 @@
 
 import { MapContainer, TileLayer,Marker,Popup, useMap } from 'react-leaflet'
-
-
+import {CircularProgress} from "@nextui-org/progress";
 import React, { useState } from 'react'
 
 import "leaflet/dist/leaflet.css";
@@ -45,7 +44,8 @@ const Map = () => {
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     />
    <div 
-   style={{position:'absolute', border:'1px dashed black ', zIndex:999 , left:'50px'}}>
+   style={{position:'absolute', background:"white", borderRadius:"15px", padding:"10px", zIndex:999 , left:'50px', top:'100px'}}>
+    <div className=' font-extrabold text-large text-black'><span className='flex'>Incoming Ride Request......</span></div>
     <CurrentRides/>
    </div>
    <Marker eventHandlers={{
