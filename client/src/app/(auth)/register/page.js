@@ -122,7 +122,7 @@ const register = () => {
             </RadioGroup>
             <div className='text-red-500 text-small m-1'>
               {formik.touched.role && formik.errors?.role}</div>
-            
+             <label>Add profile picture</label> <input type="file" />
             <Button  type="submit" className="w-full bg-blue-500 text-white"> Create an account </Button>
             <p className="text-sm m-2 text-center">Already have an account? <a as={Link} href="/" className="text-blue-600 font-semibold hover:underline">Login here</a></p>
  

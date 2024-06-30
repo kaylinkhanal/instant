@@ -5,11 +5,16 @@ import getDistance from 'geolib/es/getDistance';
 import {Progress} from "@nextui-org/react";
 import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
+import { io } from 'socket.io-client';
+const socket = io("http://localhost:8000/");
 import { Autocomplete,AutocompleteItem, Button, Input } from '@nextui-org/react'
 import { setCurrentMapState, setDestinationAddress, setDestinationCords, setPickUpAddress, setPickUpCords } from '@/redux/reducerSlices/locationSlice'
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import Confetti from 'react-confetti-boom';
+
 const DashboardCard = (props) => {
+
   const router = useRouter()
   const {pickUpCoords, destinationCoords, selectedPickUpAddress,selectedDestinationAddress,currentMapState}= useSelector(state=>state.location)
   const dispatch = useDispatch()
@@ -20,6 +25,7 @@ const DashboardCard = (props) => {
     const [searchResult, setSearchResult] = useState([])
     const [isPriceUpdated, setIsPriceUpdated] = useState(false)
     const [defaultPrice, setDefaultPrice] = useState(0)
+    const [isRideAccepted, setIsRideAccepted] = useState(false)
     useEffect(()=>{
       setIsPriceUpdated(false)
     },[selectedVehicle])
@@ -39,7 +45,14 @@ const DashboardCard = (props) => {
     },[searchId])
 
 
+    useEffect(()=>{
+      socket.on('acceptedRideDetails',(acceptedRideDetails)=>{
 
+        if(userDetails._id === acceptedRideDetails.passengerId){
+          setIsRideAccepted(true)
+        }
+      })
+    },[socket])
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -86,7 +99,7 @@ const DashboardCard = (props) => {
     }
     dispatch(setCurrentMapState('destination'))
     setRiderSearchStart(true)
-   await axios.post('http://localhost:8000/rides', {
+    socket.emit('rides', {
       pickUpCoords,
       destinationCoords,
       destination: selectedDestinationAddress,
@@ -97,14 +110,15 @@ const DashboardCard = (props) => {
       distance: props.distance
     })
 
-
   }
 
   return (
     <div >
         <div  style={{position:'relative',top:'100px',zIndex:999}} className='flex p-2 bg-white  shadow-lg m-12'>
           <div className='text-4xl w-[40%] p-12'>
+
           <strong>Faster</strong> <br/> more convenient<br/> in a new way
+        {isRideAccepted &&  <Confetti mode="boom" particleCount={50} colors={['#ff577f', '#ff884b']} /> } 
  
           <Autocomplete 
         label="Enter pick up location" 
@@ -148,7 +162,11 @@ const DashboardCard = (props) => {
    
           </div>
           <div className='p-4'>
-            <Image src={"/"+selectedVehicle+'.png' }  className='h-200' height={500} width={500}/>
+            {isRideAccepted ? (
+                <h1>  congrats your ride is accepted <Button>Cancel</Button></h1>
+            ): (
+              <>
+                  <Image src={"/"+selectedVehicle+'.png' }  className='h-200' height={500} width={500}/>
             
             <div className='p-2 border bg-black text-white border-black m-2'>
          
@@ -164,16 +182,19 @@ const DashboardCard = (props) => {
                 className="max-w-md"
               />
               </>)}
-          { pickUpCoords[0] && destinationCoords[0] && selectedPickUpAddress && selectedDestinationAddress && (
-          <>
-            Estimated Price:  <Button  disabled={riderSearchStart} onClick={()=>updatePrice('dec')} className=' bg-white text-black m-2 text-2xl'>-</Button >  {Math.trunc(props.totalPrice)}  
-             <Button disabled={riderSearchStart}  onClick={()=>updatePrice('inc')} className='bg-white text-black m-2 text-2xl'>+</Button> 
-            <p>   Estimated Distance: {props.distance} km </p>
-          </>
-          
-        ) } 
+          { pickUpCoords?.[0] && destinationCoords?.[0] && selectedPickUpAddress && selectedDestinationAddress && (
+              <>
+                Estimated Price:  <Button  disabled={riderSearchStart} onClick={()=>updatePrice('dec')} className=' bg-white text-black m-2 text-2xl'>-</Button >  {Math.trunc(props.totalPrice)}  
+                <Button disabled={riderSearchStart}  onClick={()=>updatePrice('inc')} className='bg-white text-black m-2 text-2xl'>+</Button> 
+                <p>   Estimated Distance: {props.distance} km </p>
+              </>
+            )} 
             </div>
 
+              </>
+            )}
+        
+         
           </div>
 
         </div>

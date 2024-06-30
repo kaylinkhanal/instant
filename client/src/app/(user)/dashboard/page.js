@@ -1,7 +1,8 @@
 'use client'
 import React, {useEffect, useState } from 'react'
 import vehicleType from '../../../../config/vehicleType.json'
-
+import { io } from 'socket.io-client';
+const socket = io("http://localhost:8000/");
 import DashboardCard from './dashboardCard'
 import { Button } from '@nextui-org/react'
 import { setSelectedVehicle } from '@/redux/reducerSlices/ridesSlice'
@@ -10,14 +11,20 @@ import Maps from '@/component/maps/page'
 import { getDistance } from 'geolib'
 import { useRouter } from 'next/navigation'
 const UserDashboard = () => {
-
+  useEffect(()=>{
+    socket.on('connection');
+  },[])
   const {pickUpCoords, destinationCoords , selectedPickUpAddress,selectedDestinationAddress,}= useSelector(state=>state.location)
   const dispatch = useDispatch()
   const {selectedVehicle} = useSelector(state=>state.ride)
-  const distance = getDistance(
-    { latitude: pickUpCoords[0], longitude: pickUpCoords[1] },
-    { latitude: destinationCoords[0] , longitude: destinationCoords[1]  }
-)/1000
+  let distance =0
+  if(destinationCoords?.[0] && pickUpCoords?.[0]){
+     distance = getDistance(
+      { latitude: pickUpCoords[0], longitude: pickUpCoords[1] },
+      { latitude: destinationCoords[0] , longitude: destinationCoords[1]  }
+  )/1000
+  }
+
 
   useEffect(()=>{
     const pricePerUnitKm = vehicleType[selectedVehicle].pricePerUnitKm

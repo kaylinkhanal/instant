@@ -1,11 +1,12 @@
 const express = require("express");
-const { addNewRides,getListOfProducts } = require("../controllers/rides");
+const { addNewRides,getListOfRides,changeRideStatus } = require("../controllers/rides");
 const router = express.Router();
 
 // Home page route.
 
-router.post("/rides", addNewRides);
-router.get("/rides", getListOfProducts );
+// router.post("/rides", addNewRides);
+router.get("/rides", getListOfRides );
+router.patch("/ride-status/:id", changeRideStatus );
 // router.put("/rides", getListOfProducts );
 // router.delete("/rides", getListOfProducts );
 

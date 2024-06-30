@@ -8,7 +8,7 @@ import Link from "next/link";
 
 
 export default function NavBar() {
-  const {isLoggedIn} = useSelector(state=>state.user)
+  const {isLoggedIn,userDetails} = useSelector(state=>state.user)
 
   const router = useRouter()
   const handleLogin =()=>{
@@ -26,16 +26,21 @@ export default function NavBar() {
         </p>
       </NavbarBrand>
       <NavbarContent className="sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link className="text-white text-sm" color="foreground" href="/">
-            Ride
-          </Link>
-        </NavbarItem>
+       { userDetails.role !== 'rider' && (
+         <NavbarItem>
+         <Link className="text-white text-sm" color="foreground" href="/">
+           Ride
+         </Link>
+       </NavbarItem>
+       )
+       }
+        { userDetails.role === 'rider' && (
         <NavbarItem  >
           <Link href="/rider-dashboard" className="text-white text-sm" color="foreground">
             Drive
           </Link>
         </NavbarItem>
+        )}
         <NavbarItem>
           <Link color="foreground"className="text-white text-sm" href="#">
             Contact

@@ -7,7 +7,8 @@ const initialState = {
     destinationCoords:[27.70182, 85.3206],
     selectedPickUpAddress: '',
     selectedDestinationAddress: '',
-    currentMapState: 'pickup'
+    currentMapState: 'pickup',
+    cardSelectionId: ''
 }
 
 
@@ -47,9 +48,20 @@ const locationSlice = createSlice({
             ...state,
             currentMapState: actions.payload
           }
-        }
+        },
+        setNewLocations(state, actions){
+          const  {pickUp, pickUpCoords, destination, destinationCoords, _id} = actions.payload
+          return{
+            ...state,
+            pickUpCoords,
+            destinationCoords:destinationCoords,
+            selectedPickUpAddress: pickUp,
+            selectedDestinationAddress: destination,
+            cardSelectionId: _id
+          }
+        },
     }
 })
 
-export const { setPickUpCords,setDestinationCords,setPickUpAddress,setDestinationAddress,setCurrentMapState } = locationSlice.actions
+export const { setPickUpCords,setNewLocations,setDestinationCords,setPickUpAddress,setDestinationAddress,setCurrentMapState } = locationSlice.actions
 export default locationSlice.reducer

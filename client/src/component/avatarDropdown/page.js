@@ -2,8 +2,10 @@ import React from "react";
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, Avatar} from "@nextui-org/react";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "@/redux/reducerSlices/userSlice";
+import { useRouter } from "next/navigation";
 
 export default function AvatarDropdown() {
+  const router = useRouter()
     const dispatch = useDispatch()
    const { userDetails} = useSelector(state=>state.user)
     const generateShortName= () => {
@@ -30,6 +32,7 @@ export default function AvatarDropdown() {
   const handleAction =(key)=> {
     if(key === 'Logout'){
        dispatch( logoutUser())
+       router.push('/')
     }
 
   }

@@ -53,7 +53,8 @@ const login = () => {
     dispatch(addToken(data.token))
     dispatch(addUserDetails(data.user))
     if(res.statusText == 'OK'){
-      router.push('/')
+      if(data.user.role === 'rider') router.push('/rider-dashboard')
+      else router.push('/')
     }
 
   }catch(err){
